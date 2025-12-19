@@ -12,7 +12,7 @@ from recommendation.recommend import (
 df, vectorizer, tfidf_matrix = get_data_and_model()
 
 st.set_page_config(page_title="Rekomendasi Produk Halal", layout="wide")
-st.title("🛒 Temukan Produk Halal Terbaik Anda!")
+st.title("🛒 Temukan Produk Halal Terbaikmu!")
 
 st.sidebar.header("Opsi Filter")
 
