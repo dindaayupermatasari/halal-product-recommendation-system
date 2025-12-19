@@ -7,8 +7,8 @@ The system leverages content-based filtering principles, utilizing TF-IDF (Term 
 ## Installation and Setup
 1. Clone the repository:
 ```bash
-git clone https://github.com/dindaayupermatasari/product-recommendation-system
-cd product-recommendation-system
+git clone https://github.com/dindaayupermatasari/halal-product-recommendation-system
+cd halal-product-recommendation-system
 ```
 
 2. Install dependencies:
