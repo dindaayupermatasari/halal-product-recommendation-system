@@ -9,6 +9,7 @@ from recommendation.recommend import (
     bersihkan_html,
 )
 
+
 df, vectorizer, tfidf_matrix = get_data_and_model()
 
 st.set_page_config(page_title="Rekomendasi Produk Halal", layout="wide")
@@ -16,38 +17,55 @@ st.title("🛒 Temukan Produk Halal Terbaikmu!")
 
 st.sidebar.header("Opsi Filter")
 
+labels = df["label"].unique().tolist()
+kotas = df["kota"].unique().tolist()
+
 if "category_filter" not in st.session_state:
-    st.session_state.category_filter = df["label"].unique()[0]
+    st.session_state.category_filter = labels[0]
+
 if "location_filter" not in st.session_state:
-    st.session_state.location_filter = df["kota"].unique()[0]
+    st.session_state.location_filter = kotas[0]
+
 if "min_price" not in st.session_state:
     st.session_state.min_price = int(df["harga"].min())
+
 if "max_price" not in st.session_state:
     st.session_state.max_price = int(df["harga"].max())
+
 if "rating_filter" not in st.session_state:
     st.session_state.rating_filter = 1.0
 
+
 if st.sidebar.button("🔄 Reset Filter"):
-    st.session_state.category_filter = df["label"].unique()[0]
-    st.session_state.location_filter = df["kota"].unique()[0]
+    st.session_state.category_filter = labels[0]
+    st.session_state.location_filter = kotas[0]
     st.session_state.min_price = int(df["harga"].min())
     st.session_state.max_price = int(df["harga"].max())
     st.session_state.rating_filter = 1.0
-    st.experimental_rerun()
+    st.rerun()
 
 st.sidebar.subheader("Kategori & Lokasi")
 category_filter = st.sidebar.selectbox(
     "Pilih Kategori",
-    df["label"].unique(),
-    index=list(df["label"].unique()).index(st.session_state.category_filter),
+    labels,
+    index=(
+        labels.index(st.session_state.category_filter)
+        if st.session_state.category_filter in labels
+        else 0
+    ),
     key="category_filter",
 )
 location_filter = st.sidebar.selectbox(
     "Pilih Lokasi",
-    df["kota"].unique(),
-    index=list(df["kota"].unique()).index(st.session_state.location_filter),
+    kotas,
+    index=(
+        kotas.index(st.session_state.location_filter)
+        if st.session_state.location_filter in kotas
+        else 0
+    ),
     key="location_filter",
 )
+
 
 st.sidebar.subheader("Rentang Harga (Rp)")
 min_price = st.sidebar.number_input(
@@ -76,11 +94,16 @@ def rating_to_stars(rating):
 
 
 rating_options = [1.0, 2.0, 3.0, 4.0, 5.0]
+
 rating_filter = st.sidebar.radio(
     "Pilih Rating Minimal",
     rating_options,
+    index=(
+        rating_options.index(st.session_state.rating_filter)
+        if st.session_state.rating_filter in rating_options
+        else 0
+    ),
     format_func=lambda x: rating_to_stars(x),
-    index=rating_options.index(st.session_state.rating_filter),
     key="rating_filter",
 )
 
