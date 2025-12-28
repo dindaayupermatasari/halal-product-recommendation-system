@@ -4,6 +4,9 @@ The system leverages content-based filtering principles, utilizing TF-IDF (Term 
 ## Overview
 ![Image](https://github.com/user-attachments/assets/c6004b49-901b-460e-8529-b4ae4a1b5830)
 
+Live Demo
+https://halal-product-recommendation.up.railway.app/
+
 ## Installation and Setup
 1. Clone the repository:
 ```bash
